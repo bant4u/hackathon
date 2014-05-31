@@ -29,73 +29,15 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript">
          jQuery(document).ready(function($) {
-            $('#map-div').load('/googlemap/');
-        });
+            //$("#rain-data").load("/rainfall/");
+            var auto_refresh = setInterval(
+            function ()
+            {
+                $('#rain-data').load('/rainfall/').fadeIn("fast");
+                }, 60000); 
+            });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
-    <script>
-          var longLat = [];
-          function initialize() {
-            getCoordinates('Pokhara');
-            console.log(longLat);
-            var myLatlng = new google.maps.LatLng(longLat[0],longLat[1]);
-            var mapOptions = {
-              zoom: 8,
-              center: myLatlng,
-              mapTypeId: google.maps.MapTypeId.TERRAIN
-          };
 
-          var map = new google.maps.Map(document.getElementById('map-div'),
-              mapOptions);
-
-          var weatherLayer = new google.maps.weather.WeatherLayer({
-            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
-          });
-          weatherLayer.setMap(map);
-
-          var cloudLayer = new google.maps.weather.CloudLayer();
-          cloudLayer.setMap(map);
-
-          var marker = new google.maps.Marker({
-            position: myLatlng,
-            title:"Status"
-          });
-          marker.setMap(map);
-
-          var populationOptions = {
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: map.center,
-            radius: 30000
-          };
-          var cityCircle = new google.maps.Circle(populationOptions);
-
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-
-        function getCoordinates(locations){
-          var getURI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + locations
-          // $.getJSON( getURI, function( data ) {
-          //     lattd = data.results[0].geometry.location.lat ;
-          //     lngtd = data.results[0].geometry.location.lng ;
-          //     return [lattd,lngtd];
-          // });  
-          $.ajax({
-            url: getURI,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-              longLat.push(data.results[0].geometry.location.lat);
-              longLat.push(data.results[0].geometry.location.lng);
-            }
-          });
-        }
-    </script>
 
   </head>
 
@@ -175,7 +117,9 @@
 
 
                 </div>
-                <div class="col-md-6" id='map-div' style="height:300px; width: 500px;"></div>
+                <div class="col-md-6" id='rain-data' style="height:300px; width: 500px; overflow-y: scroll">
+                    <div id='rain-status'></div>
+                </div>
                 
             </div>
             <div class="row">

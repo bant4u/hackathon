@@ -1,13 +1,37 @@
-{% extends 'base.html' %}
-{% load i18n %}
+
 
 {% block container %}
 
-{{  count }}
+<!--{{  results | length}}-->
+<h5>Rainfall Watch</h5>
+<table border=1 class='table table-striped'>
+<tr><th>Basin name</td>
+	<th>Station name</td>
+	<th>Status</td>
+</tr>
+{% for x in results %}
+	{% with y=forloop.counter|stringformat:"s" %}
+	<tr>
+	{% for y in x %}
+		{% with z=forloop.counter|stringformat:"s" %}
 
-{# {% for x in a %}
+		<td>{{ y }}</td>
+		{% if y == 'Below Warning Level' %}}
+			danger
+		{% endif %}
+		{% endwith%}
+	{% endfor %}
 
-{{ iterator.next }}
+{% endwith %}
 
-{% endfor %} #}
+
+
+
+
+
+	</tr>
+{% endfor %}
+</tr>
+</table>
+
 {% endblock %}
