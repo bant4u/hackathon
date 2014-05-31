@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block container %}
+    <div class="content">
+        <form action="/send_sms/" method="POST" role='form'>
+			{% csrf_token %}
+			<div style="align:center; width: 600px;">
+			<h1 style="padding: 0px 50px 10px 300px;">Client Form</h1>
+
+			<div style="padding: 0px 50px 10px 300px;">
+				<input type="text" placeholder="From" required="" id="sender" name="sender" class='form-control' />
+			</div>
+			<div style="padding: 0px 50px 10px 300px;">
+				<input type="text" placeholder="To" required="" id="to" name="to" class='form-control' />
+			</div>
+			<div style="padding: 0px 50px 10px 300px;">
+				<textarea placeholder="Text" required="" id="text_message" name="text_message" rows=10 cols=40 class='form-control'></textarea>
+			</div>
+			<div style="padding: 0px 50px 10px 390px;">
+				<input type="submit" value="Submit" class='btn btn-default' />
+			</div>
+			</div>
+		</form><!-- form -->
+    </div>
+{% endblock %}
