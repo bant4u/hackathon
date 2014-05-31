@@ -26,6 +26,11 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'bijaypant1@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ubuntu1..'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -38,6 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'ews',
+    'registration',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,7 +72,7 @@ ROOT_URLCONF = 'hackathon.urls'
 
 WSGI_APPLICATION = 'hackathon.wsgi.application'
 
-
+ACCOUNT_ACTIVATION_DAYS = 7
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
@@ -101,3 +108,4 @@ LOGIN_REDIRECT_URL = '/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates')
 )
+
