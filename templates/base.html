@@ -50,26 +50,33 @@
     <div class="container">
     {% block container %}
         <div class="content">
-            <div class="page-header">
-                <h1>Early Warning System</h1>
+        {% if user.is_authenticated %}
+        <div class='row'>
+            <div class="row">
+                <div class="col-md-6">For Rainfall Graph</div>
+                <div class="col-md-6">For Map</div>
+                
             </div>
-            <ul>
-                {% if not user.is_authenticated %}
-                <li><a href="{% url 'django.contrib.auth.views.login' %}">{% trans "Log in" %}</a></li>
-                {% endif %}
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'django.contrib.auth.views.logout' %}">{% trans "Log out" %}</a></li>
-                <li><a href="{% url 'django.contrib.auth.views.password_change' %}">{% trans "Change password" %}</a></li>
-                <li><a href="{% url 'django.contrib.auth.views.password_reset' %}">{% trans "Reset my password" %}</a></li>
-                 
-                 <li><a href="{% url 'clientform' %}">{% trans "Early Warning System" %}</a></li>
-                 {% endif %}
-            </ul>
+            <div class="row">
+                <div class="col-md-6">Possible latest disaster</div>
+                <div class="col-md-6">Extreme Weather Conditions</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">For Farmers</div>
+                <div class="col-md-6">Send message Manually</div>
+            </div>
+
+           
+        </div>
+
+        {% endif %}
+
         </div>
     {% endblock %}
     <hr>
     <footer>
-        <p>By <a href="https://kpoudel.com.np">Team-EWS</a> &copy; <a href=''>Hackathon - LeapFrog</a> 2014</p>
+        <p>By <a href="https://kpoudel.com.np">Team-EWS</a> &#64; <a href=''>Hackathon - LeapFrog</a> 2014</p>
     </footer>
     </div> <!-- /container -->
 
