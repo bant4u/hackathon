@@ -26,6 +26,11 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'bijaypant1@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ubuntu1..'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -102,3 +107,4 @@ LOGIN_REDIRECT_URL = '/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates')
 )
+
