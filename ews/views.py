@@ -1,5 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+<<<<<<< HEAD
+=======
+import re, datetime
+>>>>>>> 186a9af3817ba20b5409fa67799347aec304285e
 from django.shortcuts import render, render_to_response
 
 # Create your views here.
@@ -16,9 +20,9 @@ def rainfall_watch(request):
 	soup =  BeautifulSoup(html.text)
 
 	trs = soup.find_all(style="background-color:#35d929")
-	
+
 	results = []
-	
+
 	for tr in trs:
 		tds = tr.find_all('td')
 
@@ -36,7 +40,7 @@ def rainfall_watch(request):
 					result.append(text1)
 				elif i == 10:
 					result.append(text1)
-		
+
 		if result != []:
 			results.append(result)
 
@@ -47,3 +51,20 @@ def rainfall_watch(request):
 def google_map(request):
 	return render(request,"googleMap.html")
 
+<<<<<<< HEAD
+=======
+def farmer_notificantion():
+	rice = {'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
+	maize = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
+	sugarcane = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
+
+	files  =  open('/home/bijay/hackathon/hackathon/ews/sample_rain_data.json')
+	data = json.load(files)
+
+	for i, x in enumerate(data):
+		if i%3:
+			from_date = x['date']
+			conv = time.strptime(from_date, "%y-%m-%r")
+			print time.strftime("")
+			d=datetime.datetime(*map(int, re.split('[^\d]', s)[:-1]))
+>>>>>>> 186a9af3817ba20b5409fa67799347aec304285e

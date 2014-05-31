@@ -2,10 +2,10 @@
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Early Warning System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Early Warning System">
     <meta name="author" content="Krishna Poudel">
     <!-- Le styles -->
@@ -19,6 +19,7 @@
     <link href="{% static 'css/morris/morris.css' %}" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{% static 'css/AdminLTE.css' %}" rel="stylesheet" type="text/css" />
+<<<<<<< HEAD
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -43,6 +44,22 @@
 
 
   <body class="skin-blue">
+=======
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="skin-blue">
+>>>>>>> 186a9af3817ba20b5409fa67799347aec304285e
     <header class="header">
         <a class="logo" href="{% url 'index' %}">Early Warning System</a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -83,39 +100,100 @@
             </div>
         </nav>
     </header>
-  
-    <div class="container">
-    {% block container %}
-        <div class="content">
-        {% if user.is_authenticated %}
-        <div class='row'>
-            <div class="row">
-                <div class="col-md-6">
-                    <!-- Main content -->
-                <section class="content">
 
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left info">
+                        <p>Hello, {{ user.username }}</p>
+
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <a href="{% url 'index' %}">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <aside class="right-side">
+            <div class="container">
+                {% block container %}
+                <section class="content">
+                    {% if user.is_authenticated %}
+                    <!-- Main row -->
                     <div class="row">
-                        <section class="col-lg-12"> 
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs pull-right" style="cursor: move;">
-                                    <li class="pull-left header"><i class="fa fa-inbox"></i> Data of Rainfall</li>
-                                </ul>
-                                <!-- Custom tabs (Charts with tabs)-->
-                                <div class="nav-tabs-custom">
-                                    <div class="tab-content no-padding">
-                                        <!-- Morris chart - Sales -->
-                                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-                                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-                                    </div>
+                        <!-- Left col -->
+                        <section class="col-lg-6 connectedSortable">
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <i class="fa fa-inbox"></i>
+                                    <h3 class="box-title">Data of Rainfall</h3>
                                 </div>
-                            </div><!-- /.nav-tabs-custom -->
+                                <div class="box-body">
+                                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                                </div>
+                            </div>
+                            <!-- quick email widget -->
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <i class="fa fa-envelope"></i>
+                                    <h3 class="box-title">Quick Email</h3>
+                                </div>
+                                <div class="box-body">
+                                    <form action="#" method="post">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="emailto" placeholder="Email to:" data-role="tagsinput"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="subject" placeholder="Subject"/>
+                                        </div>
+                                        <div>
+                                            <textarea class="textarea" placeholder="Message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="box-footer clearfix">
+                                    <button class="pull-right btn btn-default" id="sendEmail">Send <i class="fa fa-arrow-circle-right"></i></button>
+                                </div>
+                            </div>
 
                         </section><!-- /.Left col -->
+
+                        <section class="col-lg-6 connectedSortable">
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <i class="fa fa-inbox"></i>
+                                    <h3 class="box-title">Map of area</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div id='map-div' style="height:300px; width: 500px;"></div>
+                                </div>
+                            </div>
+                        </section><!-- right col -->
                     </div>
+                    <div class='row'>
+                        <div class="row">
+                            <div class="col-md-6">Possible latest disaster</div>
+                            <div class="col-md-6">Extreme Weather Conditions</div>
+                        </div>
 
-                </section><!-- /.content -->
+                        <div class="row">
+                            <div class="col-md-6">For Farmers</div>
+                            <div class="col-md-6">Send message Manually</div>
+                        </div>
 
 
+<<<<<<< HEAD
                 </div>
                 <div class="col-md-6" id='rain-data' style="height:300px; width: 500px; overflow-y: scroll">
                     <div id='rain-status'></div>
@@ -131,21 +209,24 @@
                 <div class="col-md-6">For Farmers</div>
                 <div class="col-md-6">Send message Manually</div>
             </div>
+=======
+                    </div>
+>>>>>>> 186a9af3817ba20b5409fa67799347aec304285e
 
-           
-        </div>
+                    {% endif %}
 
-        {% endif %}
+                </section>
+                {% endblock %}
+                <hr>
+                <footer>
+                    <p>By <a href="https://kpoudel.com.np">Team-EWS</a> &#64; <a href=''>Hackathon - LeapFrog</a> 2014</p>
+                </footer>
+            </div> <!-- /container -->
+        </aside>
+    </div>
 
-        </div>
-    {% endblock %}
-    <hr>
-    <footer>
-        <p>By <a href="https://kpoudel.com.np">Team-EWS</a> &#64; <a href=''>Hackathon - LeapFrog</a> 2014</p>
-    </footer>
-    </div> <!-- /container -->
 
-    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <!-- jQuery UI 1.10.3 -->
     <script src="{% static 'js/jquery-ui-1.10.3.min.js' %}" type="text/javascript"></script>
     <!-- Bootstrap -->
@@ -156,8 +237,79 @@
 
     <!-- AdminLTE App -->
     <script src="{% static 'js/scripts/app.js' %}" type="text/javascript"></script>
-    
+
     <script src="{% static 'js/scripts/dashboard.js' %}" type="text/javascript"></script>
 
-  </body>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            // $('#map-div').load('/googlemap/');
+            // $('body').css('width', '100%')
+        });
+    </script>
+    <script>
+        var longLat = [];
+        function initialize() {
+            getCoordinates('Pokhara');
+            console.log(longLat);
+            var myLatlng = new google.maps.LatLng(longLat[0],longLat[1]);
+            var mapOptions = {
+                zoom: 8,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            };
+
+            var map = new google.maps.Map(document.getElementById('map-div'),
+                mapOptions);
+
+            var weatherLayer = new google.maps.weather.WeatherLayer({
+                temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+            });
+            weatherLayer.setMap(map);
+
+            var cloudLayer = new google.maps.weather.CloudLayer();
+            cloudLayer.setMap(map);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                title:"Status"
+            });
+            marker.setMap(map);
+
+            var populationOptions = {
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: map.center,
+                radius: 30000
+            };
+            var cityCircle = new google.maps.Circle(populationOptions);
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function getCoordinates(locations){
+            var getURI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + locations
+            // $.getJSON( getURI, function( data ) {
+            //     lattd = data.results[0].geometry.location.lat ;
+            //     lngtd = data.results[0].geometry.location.lng ;
+            //     return [lattd,lngtd];
+            // });
+            $.ajax({
+                url: getURI,
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                    longLat.push(data.results[0].geometry.location.lat);
+                    longLat.push(data.results[0].geometry.location.lng);
+                }
+            });
+            }
+</script>
+
+</body>
 </html>
