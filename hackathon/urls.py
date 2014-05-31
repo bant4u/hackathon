@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^client/$','ews.views.client_form', name='clientform'),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 )

@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'ews',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,7 +66,7 @@ ROOT_URLCONF = 'hackathon.urls'
 
 WSGI_APPLICATION = 'hackathon.wsgi.application'
 
-
+ACCOUNT_ACTIVATION_DAYS = 7
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
