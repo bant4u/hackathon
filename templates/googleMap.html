@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Weather layer</title>
+    <style>
+      html, body, #map-canvas {
+        height: 200px;
+        width: 200px;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
+    <script>
+  var longLat = [];
+  function initialize() {
+    getCoordinates('Pokhara');
+    console.log(longLat);
+    var myLatlng = new google.maps.LatLng(longLat[0],longLat[1]);
+    var mapOptions = {
+      zoom: 8,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var weatherLayer = new google.maps.weather.WeatherLayer({
+    temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+  });
+  weatherLayer.setMap(map);
+
+  var cloudLayer = new google.maps.weather.CloudLayer();
+  cloudLayer.setMap(map);
+
+  var marker = new google.maps.Marker({
+    position: myLatlng,
+    title:"Hello Pokhara"
+  });
+  marker.setMap(map);
+
+  var populationOptions = {
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    map: map,
+    center: map.center,
+    radius: 30000
+  };
+  var cityCircle = new google.maps.Circle(populationOptions);
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function getCoordinates(locations){
+  var getURI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + locations
+  // $.getJSON( getURI, function( data ) {
+  //     lattd = data.results[0].geometry.location.lat ;
+  //     lngtd = data.results[0].geometry.location.lng ;
+  //     return [lattd,lngtd];
+  // });  
+  $.ajax({
+    url: getURI,
+    dataType: 'json',
+    async: false,
+    success: function(data) {
+      longLat.push(data.results[0].geometry.location.lat);
+      longLat.push(data.results[0].geometry.location.lng);
+    }
+  });
+}
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>

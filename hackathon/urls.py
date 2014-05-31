@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 
 
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,6 +13,7 @@ urlpatterns = patterns('',
     
     url(r'', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^client/$','ews.views.client_form', name='clientform'),
+    url(r'^client/$','ews.views.rainfall_watch', name='clientform'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^googlemap/', 'ews.views.google_map'),
 )

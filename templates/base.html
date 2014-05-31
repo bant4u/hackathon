@@ -10,8 +10,7 @@
     <meta name="author" content="Krishna Poudel">
     <!-- Le styles -->
     <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- font Awesome -->
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
@@ -25,48 +24,131 @@
         padding-top: 60px;
         padding-bottom: 40px;
       }
+
     </style>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript">
+         jQuery(document).ready(function($) {
+            $('#map-div').load('/googlemap/');
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
+    <script>
+          var longLat = [];
+          function initialize() {
+            getCoordinates('Pokhara');
+            console.log(longLat);
+            var myLatlng = new google.maps.LatLng(longLat[0],longLat[1]);
+            var mapOptions = {
+              zoom: 8,
+              center: myLatlng,
+              mapTypeId: google.maps.MapTypeId.TERRAIN
+          };
+
+          var map = new google.maps.Map(document.getElementById('map-div'),
+              mapOptions);
+
+          var weatherLayer = new google.maps.weather.WeatherLayer({
+            temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+          });
+          weatherLayer.setMap(map);
+
+          var cloudLayer = new google.maps.weather.CloudLayer();
+          cloudLayer.setMap(map);
+
+          var marker = new google.maps.Marker({
+            position: myLatlng,
+            title:"Status"
+          });
+          marker.setMap(map);
+
+          var populationOptions = {
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: map.center,
+            radius: 30000
+          };
+          var cityCircle = new google.maps.Circle(populationOptions);
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function getCoordinates(locations){
+          var getURI = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + locations
+          // $.getJSON( getURI, function( data ) {
+          //     lattd = data.results[0].geometry.location.lat ;
+          //     lngtd = data.results[0].geometry.location.lng ;
+          //     return [lattd,lngtd];
+          // });  
+          $.ajax({
+            url: getURI,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+              longLat.push(data.results[0].geometry.location.lat);
+              longLat.push(data.results[0].geometry.location.lng);
+            }
+          });
+        }
+    </script>
+
   </head>
 
-  <body>
-  
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'index' %}">Early Warning System</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-            {% if user.is_authenticated %}
-            {% else %}
-            <li><a href="/accounts/register">{% trans 'Register' %}</a></li>
-            {% endif %}
-            </a></li>
-           
-          </ul>
-            {% if user.is_authenticated %}
-            <ul class="nav navbar-nav navbar-right">
-                <li><p class="navbar-text">{{ user.username }}</p></li>
-                <li><a href="{% url 'django.contrib.auth.views.password_change' %}">{% trans "Change password" %}</a></li>
-                <li><a href="{% url 'django.contrib.auth.views.logout' %}">{% trans 'Log out' %}</a></li>
-            </ul>
-            {% endif %}
-        </div>
-    </div>
 
+  <body class="skin-blue">
+    <header class="header">
+        <a class="logo" href="{% url 'index' %}">Early Warning System</a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    {% if user.is_authenticated %}
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>{{ user.username }} <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{% url 'django.contrib.auth.views.password_change' %}" class="btn btn-default btn-flat">{% trans "Change password" %}</a>
+                                </div>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="{% url 'django.contrib.auth.views.logout' %}" class="btn btn-default btn-flat">{% trans 'Log out' %}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="/accounts/register">{% trans 'Register' %}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+  
     <div class="container">
     {% block container %}
         <div class="content">
         {% if user.is_authenticated %}
         <div class='row'>
             <div class="row">
-                <div class="col-md-6">For Rainfall Graph
+                <div class="col-md-6">
                     <!-- Main content -->
                 <section class="content">
 
@@ -93,7 +175,7 @@
 
 
                 </div>
-                <div class="col-md-6">For Map</div>
+                <div class="col-md-6" id='map-div' style="height:300px; width: 500px;"></div>
                 
             </div>
             <div class="row">
@@ -119,7 +201,7 @@
     </footer>
     </div> <!-- /container -->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    
     <!-- jQuery UI 1.10.3 -->
     <script src="{% static 'js/jquery-ui-1.10.3.min.js' %}" type="text/javascript"></script>
     <!-- Bootstrap -->
