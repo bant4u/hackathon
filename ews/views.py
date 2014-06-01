@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import re
 from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
 from django.core.mail import send_mail
 import json
@@ -72,7 +71,8 @@ def farmer_notification(request):
 			{'crop': 'Maize','start_month': 6, 'end_month':7 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
 			{'crop': 'Wheat','start_month': 3, 'end_month':4 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
 		]
-	files = open('/home/bijay/hackathon/hackathon/ews/sample_rain_data.json')
+
+	files = open('sample_rain_data.json')
 	data = json.load(files)
 	for crop in crops:
 		for i, x in enumerate(data):

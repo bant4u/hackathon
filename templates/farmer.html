@@ -1,20 +1,36 @@
-{% for tmp in crops %}
+<div class="form-group">
+    <label>Select Crop</label>
+    <select class="form-control" id="crop-type">
+        <option value="0">Select Crop</option>
+        {% for tmp in crops %}
+        <option value="crop-{{ tmp.crop|slugify }}">{{ tmp.crop }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div id="crop-details">
+    {% for tmp in crops %}
 
-<p><b>Crop: {{ tmp.crop }}</b></p>
-<p>General time: {{ tmp.general_time }}
-<p>Max Humidity: {{ tmp.max_humidity }}</p>
-<p>Average rain:{{ tmp.avg_rain }}</p>
-<p>Min humidity:{{ tmp.min_humidity }}</p>
-<p>Approx. Date :{{ tmp.date }}</p>
-<p>Min temperature:{{ tmp.min_temp }}</p>
-<p>Max temperature:{{ tmp.max_temp }}</p>
-<p><b>{{tmp.message}}</b></p>
-{% endfor %}
+        <div class="ind-crop" id="crop-{{ tmp.crop|slugify }}" style="display:none;">
+            <p><b>Crop: {{ tmp.crop }}</b></p>
+            <!-- <p>General time: {{ tmp.general_time }} -->
+            <p>Max Humidity: {{ tmp.max_humidity }}</p>
+            <p>Average rain:{{ tmp.avg_rain }}</p>
+            <p>Min humidity:{{ tmp.min_humidity }}</p>
+            <p>Approx. Date :{{ tmp.date }}</p>
+            <p>Min temperature:{{ tmp.min_temp }}</p>
+            <p>Max temperature:{{ tmp.max_temp }}</p>
+            <div class="alert alert-success">
+                {{tmp.message}}
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
 <button class='btn' id='send-to-farmer'>Send Details</button>
 
 <script type="text/javascript">
-	$( "#send-to-farmer" ).click(function() {
-		alert("The above details have been sent to the registered farmers");
-	});
+    $( "#send-to-farmer" ).click(function() {
+        alert("The above details have been sent to the registered farmers")
+    })
 </script>
 

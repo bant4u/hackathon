@@ -124,7 +124,7 @@
                             <div class="box box-info">
                             <div class="box-header">
                                 <i class="fa fa-inbox"></i>
-                                <h3 class="box-title">Farmer Status</h3>
+                                <h3 class="box-title">Cultivation Suggestion</h3>
 
                             </div>
                             <div class="box-body" id='farmer-data'>
@@ -149,7 +149,7 @@
                             <div class="box box-info">
                                 <div class="box-header">
                                     <i class="fa fa-inbox"></i>
-                                    <h3 class="box-title">Map of area</h3>
+                                    <h3 class="box-title">Weather</h3>
                                 </div>
                                 <div class="box-body">
                                     <div id='map-div' style="height:300px; width: 500px;"></div>
@@ -191,6 +191,12 @@
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $("#farmer-data").load("/farmers/");
+
+        $(document).on('change','#crop-type',function(){
+            value = $('#crop-type').val();
+            $('#crop-details').find('.ind-crop').hide()
+            $('#'+value).show();
+        });
 
         var auto_refresh = setInterval(function () {
             $('#rainfall-div').load('/rainfall/');
