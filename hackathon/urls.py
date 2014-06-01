@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^rainfall/$','ews.views.rainfall_watch', name='clientform'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^googlemap/', 'ews.views.google_map'),
+    url(r'^farmers/', 'ews.views.farmer_notification'),
 )

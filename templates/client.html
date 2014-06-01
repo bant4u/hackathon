@@ -14,11 +14,11 @@
 	<tr>
 	{% for y in x %}
 		{% with z=forloop.counter|stringformat:"s" %}
-
-		<td>{{ y }}</td>
-		{% if y == 'Below Warning Level' %}}
-			danger
+		{% if y == 'Below Warning Level' %}
+			No Danger in {{ x }} <br />
 		{% endif %}
+		<td>{{ y }}</td>
+		
 		{% endwith%}
 	{% endfor %}
 
