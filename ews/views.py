@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from django.shortcuts import render, render_to_response, HttpResponse
+from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
+from django.core.mail import send_mail
 import json
 import datetime
 import calendar
+
 
 # Create your views here.
 def client_form(request):
@@ -18,6 +20,8 @@ def home_page(request):
 def rainfall_watch(request):
 	html = requests.get("http://hydrology.gov.np/new/bull3/index.php/hydrology/rainfall_watch")
 	soup =  BeautifulSoup(html.text)
+
+	updated_at = soup.find(id='date_time').get_text()
 
 	trs = soup.find_all(style="background-color:#35d929")
 
@@ -39,6 +43,9 @@ def rainfall_watch(request):
 				elif i == 3:
 					result.append(text1)
 				elif i == 10:
+					print text1
+					if text1 != "Below Warning Level":
+						send_email()
 					result.append(text1)
 
 		if result != []:
@@ -46,7 +53,7 @@ def rainfall_watch(request):
 
 		count=len(results)
 	# print results
-	return render(request, "client.html",{'results': results})
+	return render(request, "client.html",{'results': results, 'updated_at': updated_at})
 
 
 def google_map(request):
@@ -78,3 +85,16 @@ def farmer_notification(request):
 			string_date = x['date']
 			date = datetime.datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
 			print calendar.month_name[date.month]
+
+def send_email(request):
+	sender = "krishna.poudel19@gmail.com"
+
+	emailto = request.POST['emailto']
+	subject = request.POST['subject']
+	message = request.POST['message']
+
+	print emailto
+
+	#Send the mail
+	send_mail(subject, message, sender, (emailto,), fail_silently=False)
+	return HttpResponseRedirect('/')
