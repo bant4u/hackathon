@@ -67,10 +67,31 @@ def farmer_notification(request):
 	sugarcane = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 
 	#calculated temperature varying
-	crops = [{'crop': 'Rice/Paddy','start_month': 6, 'end_month':7 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
-			{'crop': 'Maize','start_month': 6, 'end_month':7 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
-			{'crop': 'Wheat','start_month': 3, 'end_month':4 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
-		]
+	crops = [{'avg_rain': 80,
+			  'crop': 'Rice/Paddy',
+			  'end_month': 7,
+			  'max_temp': 45,
+			  'max_humidity': 80,
+			  'min_humidity': 60,
+			  'min_temp': 17,
+			  'start_month': 6},
+			 {'avg_rain': 80,
+			  'crop': 'Wheat',
+			  'start_month': 11,
+			  'end_month': 12,
+			  'max_temp': 30,
+			  'max_humidity': 60,
+			  'min_humidity': 50,
+			  'min_temp': 18
+			  },
+			 {'avg_rain': 80,
+			  'crop': 'Sugarcane',
+			  'end_month': 4,
+			  'max_temp': 43,
+			  'max_humidity': 85,
+			  'min_humidity': 80,
+			  'min_temp': 28,
+			  'start_month': 3}]
 
 	files = open('sample_rain_data.json')
 	data = json.load(files)
