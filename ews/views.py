@@ -63,28 +63,28 @@ def google_map(request):
 
 def farmer_notification(request):
 	#required parameters for various crop
-	rice = {'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
+	#rice = {'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 	maize = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 	sugarcane = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 
 	#calculated temperature varying
-	a_day_tmp = {'crop': 'Rice/Paddy','general_time': 'End of June - Start ofJuly','avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24, 'date':'2014-07-01' }
+	crops = [{'crop': 'Rice/Paddy','start_month': 6, 'end_month':7 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
+			{'crop': 'Maize','start_month': 6, 'end_month':7 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
+			{'crop': 'Wheat','start_month': 3, 'end_month':4 ,'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':45, 'date':'2014-07-01' },
+		]
+	files = open('/home/bijay/hackathon/hackathon/ews/sample_rain_data.json')
+	data = json.load(files)
+	for crop in crops:
+		for i, x in enumerate(data):
+			if i%3 == 0:
+				string_date = x['date']
+				date = datetime.datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
+				if date.month == crop['start_month'] or date.month==crop['end_month']:
+					crop['message'] = "Nice time to cultivate"
+					break
 
+	return render(request, 'farmer.html', {"crops": crops} )
 
-
-	# for i, x in enumerate(data):
-	# 	if i%3:
-	# 		from_date = x['date']
-	# 		conv = time.strptime(from_date, "%y-%m-%r")
-	# 		print time.strftime("")
-	# 		d=datetime.datetime(*map(int, re.split('[^\d]', s)[:-1]))
-	return render(request, 'farmer.html', {"tmp": a_day_tmp} )
-
-	for i, x in enumerate(data):
-		if i%3 == 0:
-			string_date = x['date']
-			date = datetime.datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
-			print calendar.month_name[date.month]
 
 def send_email(request):
 	sender = "krishna.poudel19@gmail.com"
