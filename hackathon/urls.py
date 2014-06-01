@@ -10,11 +10,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="base.html"), name='index'),
-    
+
     url(r'', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^rainfall/$','ews.views.rainfall_watch', name='clientform'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^googlemap/', 'ews.views.google_map'),
     url(r'^farmers/', 'ews.views.farmer_notification'),
+    url(r'^send_email/', 'ews.views.send_email'),
 )

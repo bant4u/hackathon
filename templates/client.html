@@ -1,14 +1,12 @@
-
-
 {% block container %}
-
-<!--{{  results | length}}-->
-<h5>Rainfall Watch</h5>
+<div class="pull-right">{{ updated_at }}</div>
 <table border=1 class='table table-striped'>
-<tr><th>Basin name</td>
-	<th>Station name</td>
-	<th>Status</td>
-</tr>
+<thead>
+	<th>Basin name</th>
+	<th>Station name</th>
+	<th>Status</th>
+</thead>
+<tbody>
 {% for x in results %}
 	{% with y=forloop.counter|stringformat:"s" %}
 	<tr>
@@ -21,12 +19,10 @@
 
 		{% endwith%}
 	{% endfor %}
-
-{% endwith %}
-
 	</tr>
+{% endwith %}
 {% endfor %}
-</tr>
+</tbody>
 </table>
 
 {% endblock %}

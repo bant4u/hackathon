@@ -19,6 +19,8 @@ def rainfall_watch(request):
 	html = requests.get("http://hydrology.gov.np/new/bull3/index.php/hydrology/rainfall_watch")
 	soup =  BeautifulSoup(html.text)
 
+	updated_at = soup.find(id='date_time').get_text()
+
 	trs = soup.find_all(style="background-color:#35d929")
 
 	results = []
@@ -46,7 +48,7 @@ def rainfall_watch(request):
 
 		count=len(results)
 	# print results
-	return render(request, "client.html",{'results': results})
+	return render(request, "client.html",{'results': results, 'updated_at': updated_at})
 
 
 def google_map(request):
@@ -78,3 +80,16 @@ def farmer_notification(request):
 			string_date = x['date']
 			date = datetime.datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
 			print calendar.month_name[date.month]
+
+def send_email(request):
+	import smtplib
+	server = smtplib.SMTP('localhost')
+
+	sender = "test_account@ews.com"
+
+	emailto = request.POST['emailto']
+	subject = request.POST['subject']
+	message = request.POST['message']
+
+	#Send the mail
+	server.sendmail(sender, [emailto], message)
