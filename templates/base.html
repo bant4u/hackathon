@@ -19,21 +19,6 @@
     <link href="{% static 'css/morris/morris.css' %}" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{% static 'css/AdminLTE.css' %}" rel="stylesheet" type="text/css" />
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $("#farmer-data").load("/farmers/");
-
-            var auto_refresh = setInterval(
-                function ()
-                {
-
-                    $('#rainfall-div').load('/rainfall/');
-                }, 120000);
-        });
-
-    </script>
-
 
 </head>
 
@@ -150,41 +135,8 @@
                                     <button class="pull-right btn btn-default" id="sendEmail">Send <i class="fa fa-arrow-circle-right"></i></button>
                                 </div>
                             </div>
-                        </section><!-- /.Left col -->
-                        <section class="col-lg-6 connectedSortable">
+
                             <div class="box box-info">
-                                <div class="box-header">
-                                    <i class="fa fa-inbox"></i>
-                                    <h3 class="box-title">Rainfall-status</h3>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' id='rain-update' value='update' />
-                                </div>
-                                <div class="box-body" id='rainfall-div' style="width:500px; height: 300px; overflow-y: scroll;">
-
-                                </div>
-                            </div>
-                        </section><!-- right col -->
-
-                        <script type="text/javascript">
-                            $( "#rain-update" ).click(function() {
-
-                                $("rainfall-div").load('/rainfall/');
-                            });
-                        </script>
-
-                        <section class="col-lg-6 connectedSortable">
-                            <div class="box box-info">
-                                <div class="box-header">
-                                    <i class="fa fa-inbox"></i>
-                                    <h3 class="box-title">Map of area</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div id='map-div' style="height:300px; width: 500px;"></div>
-                                </div>
-                            </div>
-                        </section><!-- right col -->
-                    </div>
-                    <section class="col-lg-6 connectedSortable">
-                        <div class="box box-info">
                             <div class="box-header">
                                 <i class="fa fa-inbox"></i>
                                 <h3 class="box-title">Farmer Status</h3>
@@ -196,7 +148,31 @@
 
                             </div>
                         </div>
-                    </section><!-- right col -->
+                        </section><!-- /.Left col -->
+                        <section class="col-lg-6 connectedSortable">
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <i class="fa fa-inbox"></i>
+                                    <h3 class="box-title">Rainfall status in river</h3>
+                                    <input type='button' id='rain-update' value='update' class="pull-right btn btn-default" />
+                                </div>
+                                <div class="box-body" id='rainfall-div' style="width:500px; height: 300px; overflow-y: scroll;">
+                                    {% include 'sample_river_water_level.html' %}
+                                </div>
+                            </div>
+
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <i class="fa fa-inbox"></i>
+                                    <h3 class="box-title">Map of area</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div id='map-div' style="height:300px; width: 500px;"></div>
+                                </div>
+                            </div>
+                        </section><!-- right col -->
+
+                    </div>
                     {% endif %}
 
                 </section>
@@ -229,11 +205,20 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
 <script type="text/javascript">
     jQuery(document).ready(function($) {
+        $("#farmer-data").load("/farmers/");
+
+        var auto_refresh = setInterval(function () {
+            $('#rainfall-div').load('/rainfall/');
+        }, 120000);
         $( "#sendEmail" ).click(function() {
             alert("Message has been conveyed successfully.")
         });
-    //$('#map-div').load('/googlemap/');
-    // $('body').css('width', '100%')
+        $( "#rain-update" ).click(function() {
+
+            $("#rainfall-div").load('/rainfall/');
+        });
+        //$('#map-div').load('/googlemap/');
+        // $('body').css('width', '100%')
     });
 </script>
 <script>
