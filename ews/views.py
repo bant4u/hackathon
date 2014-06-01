@@ -1,9 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-import re, datetime
+import re
 from django.shortcuts import render, render_to_response
 import json
-import time
+import datetime
+import calendar
 
 # Create your views here.
 def client_form(request):
@@ -58,8 +59,7 @@ def farmer_notificantion():
 	data = json.load(files)
 
 	for i, x in enumerate(data):
-		if i%3:
-			from_date = x['date']
-			conv = time.strptime(from_date, "%y-%m-%r")
-			print time.strftime("")
-			d=datetime.datetime(*map(int, re.split('[^\d]', s)[:-1]))
+		if i%3 == 0:
+			string_date = x['date']
+			date = datetime.datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
+			print calendar.month_name[date.month]
