@@ -13,7 +13,8 @@ urlpatterns = patterns('',
     
     url(r'', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^client/$','ews.views.rainfall_watch', name='clientform'),
+    url(r'^rainfall/$','ews.views.rainfall_watch', name='clientform'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^googlemap/', 'ews.views.google_map'),
+    url(r'^farmers/', 'ews.views.farmer_notification'),
 )

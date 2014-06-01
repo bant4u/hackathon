@@ -1,14 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, HttpResponse
 import json
 import datetime
 import calendar
 
 # Create your views here.
 def client_form(request):
-	farmer_notificantion()
+	print request.user.password
+	print request.user.username
 	return render(request,'client.html')
 
 def home_page(request):
@@ -45,18 +46,32 @@ def rainfall_watch(request):
 
 		count=len(results)
 	# print results
-	return render(request, "client.html",{'results': results},  {"count" : count })
+	return render(request, "client.html",{'results': results})
+
 
 def google_map(request):
 	return render(request,"googleMap.html")
 
-def farmer_notificantion():
+
+
+def farmer_notification(request):
+	#required parameters for various crop
 	rice = {'avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 	maize = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 	sugarcane = {'avg_rain' : 80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24 }
 
-	files  =  open('/home/bijay/hackathon/hackathon/ews/sample_rain_data.json')
-	data = json.load(files)
+	#calculated temperature varying
+	a_day_tmp = {'crop': 'Rice/Paddy','general_time': 'End of June - Start ofJuly','avg_rain' :  80, 'min_humidity':60, 'max_humidity':80, 'min_temp':12, 'max_temp':24, 'date':'2014-07-01' }
+
+
+
+	# for i, x in enumerate(data):
+	# 	if i%3:
+	# 		from_date = x['date']
+	# 		conv = time.strptime(from_date, "%y-%m-%r")
+	# 		print time.strftime("")
+	# 		d=datetime.datetime(*map(int, re.split('[^\d]', s)[:-1]))
+	return render(request, 'farmer.html', {"tmp": a_day_tmp} )
 
 	for i, x in enumerate(data):
 		if i%3 == 0:
